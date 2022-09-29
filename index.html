@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Hello, world!</title>
+    <style>
+      * {
+        margin: 1rem;
+      }
+      body{
+        min-width: 600px;
+        display: flex;
+        justify-content: center;
+      }
+      div {
+        margin: 1rem;
+      }
+      #list {
+        border: 2px solid gray;
+        min-width: 360px;
+        width: 24.9%;
+      }
+      .item{
+        display: flex;
+        justify-content: space-between;
+      }
+      h5 {
+        display: inline;
+      }
+      #add-item{
+        position: relative;
+        left: 12rem;
+      }
+      .checked {
+        text-decoration: line-through;
+      }
+      .sign{
+        position: relative;
+      }
+      .sign input, i{
+        position: absolute;
+      }
+      i{
+        margin: .5rem 0 0 10rem;
+      }
+      input[onclick="remove(this);"]{
+        position: relative;
+        left: 2rem;
+      }
+     
+      
+      
+
+    </style>
+  </head>
+  <body>
+    <h1>SHOPPING LIST</h1>
+    <form action="#">
+      <div>
+        <span class="sign">
+          Item Name : <input type="text" id="item-name" placeholder="Enter name..." />
+          <i class="fa-solid fa-eraser" onclick="erase();"></i>
+        </span>
+        <input type="button" value="Add Item" id="add-item" />
+      </div>
+      <p id="error"></p>
+
+      <div id="list">
+        <div class="item">
+          <h5>FruitCake</h5>
+          <input type="button" value="Delete" onclick="remove(this);" />
+          <input type="button" value="Check" onclick="check(this);" />
+        </div>
+      </div>
+    </form>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      "use strict"
+    
+      var vl = false;
+      const add = document.getElementById('add-item');
+      add.addEventListener("click", addItem);
+
+      function addItem() {        
+        let err = document.getElementById('error');
+        var item_name = document.getElementById('item-name').value;
+        if (item_name =='') {
+          err.innerHTML = "please enter item name"; 
+        } else{
+          err.innerHTML = '';
+          console.log(item_name);
+          const node = document.createElement("div");
+
+          let atr0 = document.createAttribute("class");
+          atr0.value = "item";
+          node.setAttributeNode(atr0);
+
+          const name = document.createElement("h5");
+          let txtnode = document.createTextNode(item_name);
+          
+          node.appendChild(name);
+          name.appendChild(txtnode);
+
+          const btn1 = document.createElement("input");
+          const atr1 = document.createAttribute("type");
+          atr1.value = "button";
+          const atr2 = document.createAttribute("value");
+          atr2.value = "Delete";
+          const atr3 = document.createAttribute("onclick");
+          atr3.value = "remove(this);";
+          
+          btn1.setAttributeNode(atr1);
+          btn1.setAttributeNode(atr2);
+          btn1.setAttributeNode(atr3);
+
+          node.appendChild(btn1);
+
+          const btn2 = document.createElement("input");
+          const atr4 = document.createAttribute("type");
+          atr4.value = "button";
+          const atr5 = document.createAttribute("value");
+          atr5.value = "Check";
+          const atr6 = document.createAttribute("onclick");
+          atr6.value = "check(this);";
+
+          btn2.setAttributeNode(atr4);
+          btn2.setAttributeNode(atr5);
+          btn2.setAttributeNode(atr6);
+
+          node.appendChild(btn2);
+
+          document.getElementById("list").appendChild(node);
+          document.getElementById("item-name").value = "";
+        }
+      }
+      
+          function remove(e) {
+            e.parentNode.parentNode.removeChild(e.parentNode);
+          }
+
+          function check(c) {
+            c.parentNode.firstElementChild.classList.toggle("checked");
+          }
+
+          function erase(){
+            document.getElementById("item-name").value = "";
+          }
+        
+    </script>
+  </body>
+</html>
